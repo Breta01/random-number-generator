@@ -1,0 +1,379 @@
+<!doctype html>
+
+<html lang="en" manifest="rndnum.manifest">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Random Number Generator - by Breta</title>
+  <meta name="description" content="Random Number Generator">
+  <meta name="author" content="Breta">
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="blue" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#2a82d4">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#2a82d4">
+
+  <style>
+    @font-face {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 200;
+      src: local('Source Sans Pro ExtraLight'), local('SourceSansPro-ExtraLight'), url(https://fonts.gstatic.com/s/sourcesanspro/v13/6xKydSBYKcSV-LCoeQqfX1RYOo3i94_wlxdr.ttf) format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Source Sans Pro';
+      font-style: normal;
+      font-weight: 300;
+      src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url(https://fonts.gstatic.com/s/sourcesanspro/v13/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdr.ttf) format('truetype');
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-weight: 300;
+    }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2a82d4;
+      font-weight: 300;
+    }
+
+    body ::-webkit-input-placeholder {
+      /* WebKit browsers */
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2a82d4;
+      font-weight: 300;
+    }
+
+    body :-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2a82d4;
+      opacity: 1;
+      font-weight: 300;
+    }
+
+    body ::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2a82d4;
+      opacity: 1;
+      font-weight: 300;
+    }
+
+    body :-ms-input-placeholder {
+      /* Internet Explorer 10+ */
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #2a82d4;
+      font-weight: 300;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      background: #2a82d4;
+      background: linear-gradient(to bottom right, #2a82d4 0%, #50a0eb 100%);
+      background: -webkit-linear-gradient(top, #2a82d4 0%, #50a0eb 100%);
+      background: -moz-linear-gradient(top, #2a82d4 0%, #50a0eb 100%);
+      background: -ms-linear-gradient(top, #2a82d4 0%, #50a0eb 100%);
+      background: -o-linear-gradient(top, #2a82d4 0%, #50a0eb 100%);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .wrapper {
+      margin: 7rem auto 0 auto;
+      width: 600px;
+      background-color: white;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      -webkit-box-shadow: 3px 3px 7px 0px rgba(51, 51, 51, 0.5);
+      -moz-box-shadow: 3px 3px 7px 0px rgba(51, 51, 51, 0.5);
+      box-shadow: 3px 3px 7px 0px rgba(51, 51, 51, 0.5);
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 1rem;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      margin: 0 1rem;
+    }
+
+    .wrapper h1 {
+      padding: 1rem 3rem;
+      text-align: center;
+      font-size: 2.2rem;
+      transition-duration: 1s;
+      transition-timing-function: ease-in-put;
+      font-weight: 200;
+    }
+
+
+    .wrapper #random_numbers {
+      line-height: 3rem;
+      width:  calc(50% + 1.5rem);;
+      align-self: flex-end;
+      margin: 1rem 0;
+    }
+
+    .wrapper #random_numbers h2 {
+      font-weight: bold;
+      vertical-align: middle;
+      text-align: center;
+      min-width: 0;
+      width: 0;
+      font-size: 0;
+      transition: all 0.3s ease-out;
+      direction: rtl;
+    }
+
+    .wrapper #random_numbers h2.show {
+      font-size: 1rem;
+      min-width: 3rem;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .wrapper #random_numbers h2:first-child.show {
+      min-width: 3rem;
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .form {
+      padding: 20px 0;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-transform: uppercase;
+    }
+
+    .form .row {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .form input:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form input:focus {
+      color: #57aaf8;
+    }
+
+    .form button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      outline: 0;
+      border: 0;
+      background-color: #2a82d4;
+      padding: 2rem auto;
+      height: 3rem;
+      color: white;
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition-duration: 0.25s;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .form #generate {
+      align-self: stretch;
+      margin: 0 1rem;
+    }
+
+    .form label {
+      font-size: 1.4rem;
+    }
+
+    .form .number-input button:hover {
+      background-color: #f5f7f9;
+    }
+
+    .form button:hover {
+      background-color: #1b65aa;
+    }
+
+    input[type="number"] {
+      -webkit-appearance: textfield;
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .number-input {
+      border: 2px solid #ddd;
+      border-radius: 2px;
+      display: inline-flex;
+    }
+
+    .number-input,
+    .number-input * {
+      box-sizing: border-box;
+    }
+
+    .number-input button {
+      outline: none;
+      -webkit-appearance: none;
+      background-color: transparent;
+      border: none;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+      margin: 0;
+      position: relative;
+    }
+
+    .number-input button:before,
+    .number-input button:after {
+      display: inline-block;
+      position: absolute;
+      content: '';
+      width: 1rem;
+      height: 2px;
+      background-color: #3a3a3a;
+      transform: translate(-50%, -50%);
+    }
+
+    .number-input button.plus:after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .number-input input[type=number] {
+      font-family: 'Source Sans Pro', sans-serif;
+      width: 6rem;
+      padding: .5rem;
+      border: solid #ddd;
+      color: #2a82d4;
+      border-width: 0 2px;
+      font-size: 1.7rem;
+      height: 3rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    @media (max-device-width: 768px), (max-width: 620px) {
+      .wrapper {
+        width: 95%;
+      }
+
+      .form button {
+        height: 5rem;
+      }
+
+      .number-input input[type=number] {
+        height: 5rem;
+      }
+
+      .number-input button {
+        width: 5rem;
+        height: 5rem;
+      }
+
+      .wrapper {
+        margin-top: 1rem;
+      }
+
+      .wrapper #random_numbers h2.show {
+        font-size: 2rem;
+        min-width: 5rem;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+
+      .wrapper #random_numbers h2:first-child.show {
+        min-width: 5rem;
+        font-size: 4rem;
+        font-weight: bold;
+      }
+
+      .wrapper #random_numbers {
+        line-height: 4rem;
+        width:  calc(50% + 2rem);;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Random Number Generator</h1>
+    <div id="random_numbers" class="row">
+      <h2 >-</h2>
+    </div>
+    
+    <div class="form">
+      <div class="row">
+        <div class="col">
+          <label for="min">Min</label>
+          <div class="number-input">
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+            <input id="min" min="-9999999999" max="9999999999" type="number" value=1 />
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+          </div>
+        </div>
+        <div class="col">
+          <label for="max">Max</label>
+          <div class="number-input">
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"></button>
+            <input id="max" min="-9999999999" max="9999999999" type="number" value=100 />
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+          </div>
+        </div>
+      </div>
+
+      <button id="generate" onClick="getRndInteger()">Generate Number</button>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    function getRndInteger() {
+      var min = parseInt(document.getElementById("min").value, 10);
+      var max = parseInt(document.getElementById("max").value, 10);
+      var x = Math.floor(Math.random() * (max - min + 1)) + min;
+      var el = document.getElementById('random_numbers');
+      var newNum = document.createElement('h2');
+      newNum.innerHTML = x;
+      el.insertBefore(newNum, el.firstChild);
+
+      setTimeout(function() {
+        newNum.className = newNum.className + " show";
+      }, 100);
+    }
+  </script>
+</body>
+
+</html>
